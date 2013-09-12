@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from distutils.core import setup
 from distutils.util import convert_path
 from django_facebook import __version__, __maintainer__, __email__
 from fnmatch import fnmatchcase
@@ -13,8 +12,8 @@ except ImportError:
 
 standard_exclude = ['*.py', '*.pyc', '*~', '.*', '*.bak']
 standard_exclude_directories = [
-    '.*', 'CVS', '_darcs', './build',
-    './dist', 'EGG-INFO', '*.egg-info'
+    '.*', 'CVS', '_darcs', './build', './docs',
+    './dist', 'EGG-INFO', '*.egg-info', 'facebook_profiles'
 ]
 
 
@@ -101,16 +100,24 @@ package_data = find_package_data(exclude_directories=excluded_directories)
 license_text = open('LICENSE.txt').read()
 long_description = open('README.rest').read()
 
+if 'alpha' in __version__:
+    development_status = 'Development Status :: 3 - Alpha'
+else:
+    development_status = 'Development Status :: 5 - Production/Stable'
+
 CLASSIFIERS = [
-    'Development Status :: 5 - Production/Stable',
+    development_status,
     'Intended Audience :: Developers',
     'License :: OSI Approved :: GNU General Public License (GPL)',
     'Natural Language :: English',
     'Operating System :: OS Independent',
     'Programming Language :: Python',
+    'Programming Language :: Python :: 2.6',
+    'Programming Language :: Python :: 2.7',
     'Topic :: Scientific/Engineering :: Mathematics',
     'Topic :: Software Development :: Libraries :: Python Modules',
-    'Framework :: Django'
+    'Framework :: Django',
+    'Environment :: Web Environment',
 ]
 
 DESCRIPTION = """Facebook open graph API client in python. Enables django applications to register users using facebook.
@@ -118,6 +125,7 @@ Fixes issues with the official but unsupported Facebook python-sdk. Enables mobi
 Canvas page authentication for facebook applications. FQL access via the server side api.
 """
 
+download_url = 'https://github.com/tschellenbach/Django-facebook/archive/v%s.tar.gz' % __version__
 
 setup(
     name='django-facebook',
@@ -128,13 +136,17 @@ setup(
     license=license_text,
     packages=find_packages(),
     package_data=package_data,
-#    data_files=[('', ['LICENSE.txt',
-#                      'README.rest'])],
     description=DESCRIPTION,
     long_description=long_description,
-    classifiers=CLASSIFIERS
-#    tests_require=[
-#        'django',
-#    ],
-#    test_suite='django_facebook.runtests.runtests',
+    classifiers=CLASSIFIERS,
+    tests_require=[
+        'django',
+        'python-memcached',
+        'pil',
+        'mock',
+        'pytest',
+        'pytest-django',
+    ],
+    test_suite='runtests.runtests',
+    zip_safe=False,  # South can't run migrations on zipped eggs.
 )

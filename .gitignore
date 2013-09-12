@@ -22,6 +22,10 @@ bulkloader-*
 
 #app specific
 facebook_example/django_fb_test
+facebook_example/media/*
+
+#hide the docs
+html
 
 # But allow the gitignore file
 !.gitignore

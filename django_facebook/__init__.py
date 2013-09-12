@@ -4,7 +4,7 @@ __credits__ = ['Thierry Schellenbach, mellowmorning.com, @tschellenbach']
 
 
 __license__ = 'BSD'
-__version__ = '4.3.4'
+__version__ = '5.2.6'
 __maintainer__ = 'Thierry Schellenbach'
 __email__ = 'thierryschellenbach@gmail.com'
 __status__ = 'Production'
@@ -22,5 +22,4 @@ http://pypi.python.org/pypi
 setting up pip for editing
 http://www.pip-installer.org/en/latest/index.html
 pip install -e ./
-
 '''

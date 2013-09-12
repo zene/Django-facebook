@@ -1,6 +1,7 @@
 from celery import task
 from django.db import IntegrityError
 import logging
+from django_facebook.utils import get_class_for
 
 logger = logging.getLogger(__name__)
 
@@ -23,9 +24,9 @@ def store_likes(user, likes):
     :param friends: List of your likes
     :type friends: list
     '''
-    from django_facebook.api import FacebookUserConverter
+    converter_class = get_class_for('user_conversion')
     logger.info('celery is storing %s likes' % len(likes))
-    FacebookUserConverter._store_likes(user, likes)
+    converter_class._store_likes(user, likes)
     return likes
 
 
@@ -71,9 +72,9 @@ def store_friends(user, friends):
     :param friends: List of your friends
     :type friends: list
     '''
-    from django_facebook.api import FacebookUserConverter
+    converter_class = get_class_for('user_conversion')
     logger.info('celery is storing %s friends' % len(friends))
-    FacebookUserConverter._store_friends(user, friends)
+    converter_class._store_friends(user, friends)
     return friends
 
 
@@ -129,9 +130,9 @@ def retry_open_graph_shares_for_user(user):
 def token_extended_connect(sender, profile, token_changed, old_token, **kwargs):
     from django_facebook import settings as facebook_settings
     if facebook_settings.FACEBOOK_CELERY_TOKEN_EXTEND:
-        #This is only save to run if we are using Celery
+        # This is only save to run if we are using Celery
         user = profile.user
-        #make sure we don't have troubles caused by replication lag
+        # make sure we don't have troubles caused by replication lag
         retry_open_graph_shares_for_user.apply_async(args=[user], countdown=60)
 
 from django_facebook.signals import facebook_token_extend_finished
