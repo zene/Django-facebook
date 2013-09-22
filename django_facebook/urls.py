@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^disconnect/$',
         'disconnect', name='facebook_disconnect'),
     url(r'^example/$', 'example', name='facebook_example'),
+    url(r'^test-users/$', 'test_users', name="fb_test_users")
 )
 
 dev_patterns = patterns(
@@ -35,7 +36,6 @@ dev_patterns = patterns(
         name='facebook_open_graph_beta'),
     url(r'^remove_og_share/$', 'remove_og_share',
         name='facebook_remove_og_share'),
-    url(r'^test-users/$', 'test_users', name="fb_test_users")
 )
 
 # when developing enable the example views

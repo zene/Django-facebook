@@ -4,13 +4,8 @@ from django.http import Http404
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from django.utils.translation import ugettext as _
-<<<<<<< HEAD
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
-from django.contrib.auth.decorators import login_required
-=======
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
->>>>>>> 3562ab3a9761f8a2369d2f7e384098c7c34e4ccc
 from django_facebook import exceptions as facebook_exceptions, \
     settings as facebook_settings
 from django_facebook.connect import CONNECT_ACTIONS, connect_user
@@ -143,7 +138,6 @@ def example(request):
     return render_to_response('django_facebook/example.html', context)
 
 
-@login_required
 @csrf_exempt
 def test_users(request):
     '''
